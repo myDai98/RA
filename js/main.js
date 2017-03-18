@@ -283,15 +283,31 @@ function generateTable(sizeChoice, imageChoice){
         var shelfmark = name.substring(search);
         var manuscript = name.substring(0,search);
 
-        th.appendChild(document.createTextNode(manuscript));
+        // bold date unbold name
+        var tableDate = document.createTextNode(date);
+        var spanTableDate = document.createElement('span');
+        spanTableDate.style.fontWeight = "bold";
+        spanTableDate.appendChild(tableDate);
+
+        var tablemanu = document.createTextNode(manuscript);
+        var tableshelf = document.createTextNode(shelfmark);
+        var spanInfo = document.createElement('span');
+        spanInfo.style.fontWeight = "normal";
+        spanInfo.appendChild(tablemanu);
+        spanInfo.appendChild(document.createElement('br'));
+        spanInfo.appendChild(tableshelf);
+
+        th.appendChild(spanInfo);
+        //th.appendChild(document.createElement('br'));
+
+        //th.appendChild(document.createTextNode(shelfmark));
         th.appendChild(document.createElement('br'));
 
-        th.appendChild(document.createTextNode(shelfmark));
-        th.appendChild(document.createElement('br'));
-
-        th.appendChild(document.createTextNode(date));
+        th.appendChild(spanTableDate);
 
         th.style.textAlign = "center";
+        
+
         tbl.appendChild(th);
     }
 
