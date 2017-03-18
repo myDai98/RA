@@ -277,6 +277,10 @@ function generateTable(sizeChoice, imageChoice){
         // add margin 
         th.style.marginLeft = "5px";
         th.style.marginRight = "5px";
+
+        // set up same width
+        th.style.width = "120px";
+        
         var title = chosenManuscripts[k] + " ";
         var name = title.slice(0, title.indexOf(":"));
         var date = title.slice(title.indexOf(":")+2);
