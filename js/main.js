@@ -274,13 +274,6 @@ function generateTable(sizeChoice, imageChoice){
     for(var k = 0; k < chosenManuscripts.length; k++) {
         var th = document.createElement("th");
         th.style.border = "1px solid black";
-        // add margin 
-        th.style.marginLeft = "5px";
-        th.style.marginRight = "5px";
-
-        // set up same width
-        th.style.width = "120px";
-        
         var title = chosenManuscripts[k] + " ";
         var name = title.slice(0, title.indexOf(":"));
         var date = title.slice(title.indexOf(":")+2);
@@ -290,20 +283,13 @@ function generateTable(sizeChoice, imageChoice){
         var shelfmark = name.substring(search);
         var manuscript = name.substring(0,search);
 
-        // unbold name and bold date
-        var manunode=document.createTextNode(manuscript);
-        manunode.style.fontWeight = "normal";
-        th.appendChild(manunode);
+        th.appendChild(document.createTextNode(manuscript));
         th.appendChild(document.createElement('br'));
 
-        var marknode=document.createTextNode(shelfmark);
-        marknode.style.fontWeight = "normal";
-        th.appendChild(marknode);
+        th.appendChild(document.createTextNode(shelfmark));
         th.appendChild(document.createElement('br'));
 
-        var datenode=document.createTextNode(date);
-        marknode.style.fontWeight = "bold";
-        th.appendChild(marknode);
+        th.appendChild(document.createTextNode(date));
 
         th.style.textAlign = "center";
         tbl.appendChild(th);
@@ -417,8 +403,8 @@ function generateFlow(sizeChoice, imageChoice) {
 
             var title = chosenManuscripts[i] + " ";
             var name = title.slice(0, title.indexOf(":"));
-            // the dates should be in bold
-            var date = title.slice(title.indexOf(":")+2).bold();
+            
+            var date = title.slice(title.indexOf(":")+2);
 
             var manuscriptName = document.createTextNode(name);
             var lineBreak = document.createElement("br");
@@ -427,7 +413,10 @@ function generateFlow(sizeChoice, imageChoice) {
             var letterName = document.createTextNode(chosenLetters[j]);
             var thirdLineBreak = document.createElement("br");
 
-            
+            // the dates should be in bold
+            var spanDate = document.createElement('span');
+            spanDate.style.fontWeight = "bold";
+            spanDate.appendChild(manuscriptDate);
 
             var str = chosenManuscripts[i];
             var res = str.split(":");
@@ -463,7 +452,7 @@ function generateFlow(sizeChoice, imageChoice) {
 
             div.appendChild(manuscriptName);
             div.appendChild(lineBreak);
-            div.appendChild(manuscriptDate);
+            div.appendChild(spanDate);
             div.appendChild(secondLineBreak);
             div.appendChild(letterName);
             div.appendChild(thirdLineBreak);
