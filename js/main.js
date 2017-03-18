@@ -283,13 +283,20 @@ function generateTable(sizeChoice, imageChoice){
         var shelfmark = name.substring(search);
         var manuscript = name.substring(0,search);
 
-        th.appendChild(document.createTextNode(manuscript));
+        // unbold name and bold date
+        var manunode=document.createTextNode(manuscript);
+        manunode.style.fontWeight = "normal";
+        th.appendChild(manunode);
         th.appendChild(document.createElement('br'));
 
-        th.appendChild(document.createTextNode(shelfmark));
+        var marknode=document.createTextNode(shelfmark);
+        marknode.style.fontWeight = "normal";
+        th.appendChild(marknode);
         th.appendChild(document.createElement('br'));
 
-        th.appendChild(document.createTextNode(date));
+        var datenode=document.createTextNode(date);
+        marknode.style.fontWeight = "bold";
+        th.appendChild(marknode);
 
         th.style.textAlign = "center";
         tbl.appendChild(th);
