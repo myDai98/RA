@@ -274,6 +274,9 @@ function generateTable(sizeChoice, imageChoice){
     for(var k = 0; k < chosenManuscripts.length; k++) {
         var th = document.createElement("th");
         th.style.border = "1px solid black";
+        // add margin 
+        th.style.marginLeft = "5px";
+        th.style.marginRight = "5px";
         var title = chosenManuscripts[k] + " ";
         var name = title.slice(0, title.indexOf(":"));
         var date = title.slice(title.indexOf(":")+2);
