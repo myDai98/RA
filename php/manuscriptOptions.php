@@ -44,7 +44,8 @@ require "buildQueryString.php"; //initial SQL query
                     <?php
 //                         $letters = array("Alaph", "Beth", "Gamal", "Dalath", "He", "Waw", "Zain", "Heth", "Teth", "Yudh", "Kaph", "Lamadh", "Mim", "Nun",  "Semkath", "Ayin", "Pe", "Sadhe", "Qaph", "Rish", "Shin", "Taw");
                         $letters = array("Alaph (Angular)", "Alaph (Round)", "Beth", "Gamal", "Dalath (Angular)", "Dalath (Round)", "He (Angular)","He (Round)","Waw","Zain","Heth","Teth","Yudh (Connected)","Yudh (Stand-alone)","Kaph","Kaph (Final)","Lamadh","Lamadh (Final, open)","Lamadh (Final, closed)","Mim","Mim (Final)","Nun","Nun (Final, connected)","Nun (Final, unconnected)", "Semkath", "Ayin", "Ayin (Final, open)","Ayin (Final, closed)","Pe","Sadhe","Qaph","Rish (Angular)","Rish (Round)","Shin","Taw (Looped)","Taw (Triangular)","Taw (L-shaped)");
-                        asort($letters);
+                        //syriac order of interface and table
+                        //asort($letters);
                         foreach($letters as $letter) {
                             echo "<option value='{$letter}'>{$letter}</option>";
                         }
