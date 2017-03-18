@@ -403,7 +403,8 @@ function generateFlow(sizeChoice, imageChoice) {
 
             var title = chosenManuscripts[i] + " ";
             var name = title.slice(0, title.indexOf(":"));
-            var date = title.slice(title.indexOf(":")+2);
+            // the dates should be in bold
+            var date = title.slice(title.indexOf(":")+2).bold();
 
             var manuscriptName = document.createTextNode(name);
             var lineBreak = document.createElement("br");
@@ -411,6 +412,8 @@ function generateFlow(sizeChoice, imageChoice) {
             var secondLineBreak = document.createElement("br");
             var letterName = document.createTextNode(chosenLetters[j]);
             var thirdLineBreak = document.createElement("br");
+
+            
 
             var str = chosenManuscripts[i];
             var res = str.split(":");
