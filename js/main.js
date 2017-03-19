@@ -274,6 +274,8 @@ function generateTable(sizeChoice, imageChoice){
     for(var k = 0; k < chosenManuscripts.length; k++) {
         var th = document.createElement("th");
         th.style.border = "1px solid black";
+        
+
         var title = chosenManuscripts[k] + " ";
         var name = title.slice(0, title.indexOf(":"));
         var date = title.slice(title.indexOf(":")+2);
@@ -291,11 +293,14 @@ function generateTable(sizeChoice, imageChoice){
 
         var tablemanu = document.createTextNode(manuscript);
         var tableshelf = document.createTextNode(shelfmark);
-        var spanInfo = document.createElement('span');
+        var spanInfo = document.createElement('div');
         spanInfo.style.fontWeight = "normal";
         spanInfo.appendChild(tablemanu);
         spanInfo.appendChild(document.createElement('br'));
         spanInfo.appendChild(tableshelf);
+
+        // margin and even width of column
+        spanInfo.style.width = "120px";
 
         th.appendChild(spanInfo);
         //th.appendChild(document.createElement('br'));
@@ -306,6 +311,7 @@ function generateTable(sizeChoice, imageChoice){
         th.appendChild(spanTableDate);
 
         th.style.textAlign = "center";
+        
         
 
         tbl.appendChild(th);
@@ -331,6 +337,7 @@ function generateTable(sizeChoice, imageChoice){
 
                 var img = document.createElement("img");
                 td.style.position = "relative";
+
                 img.setAttribute("alt", chosenLetters[i]);
 
                 img.onload = function() {
