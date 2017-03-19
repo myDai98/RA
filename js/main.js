@@ -334,6 +334,8 @@ function generateTable(sizeChoice, imageChoice){
         td2.style.border = "1px solid black";
         td2.appendChild(document.createTextNode(chosenLetters[i]));
         td2.style.width= "120px";
+        td2.style.height= "100px";
+        td2.style.textAlign = "center";
         tr.appendChild(td2);
 
         for(var j = 0; j < chosenManuscripts.length; j++){
