@@ -271,6 +271,8 @@ function generateTable(sizeChoice, imageChoice){
     var tbl  = document.createElement('table');
     tbl.style.border = "1px solid black";
 
+    var tableHead  = document.createElement('thead');
+    var tableBody = document.createElement('tbody');
     for(var k = 0; k < chosenManuscripts.length; k++) {
         var th = document.createElement("th");
         th.style.border = "1px solid black";
@@ -300,7 +302,7 @@ function generateTable(sizeChoice, imageChoice){
         spanInfo.appendChild(tableshelf);
 
         // margin and even width of column
-        spanInfo.style.width = "120px";
+        spanInfo.style.width = "119px";
 
         th.appendChild(spanInfo);
         //th.appendChild(document.createElement('br'));
@@ -312,17 +314,26 @@ function generateTable(sizeChoice, imageChoice){
 
         th.style.textAlign = "center";
         
-        
+    
 
-        tbl.appendChild(th);
+        //tbl.appendChild(th);
+
+        tableHead.appendChild(th);
     }
+    
+    tableHead.style.background = "#B8C1C8";
+    tableHead.style.zIndex="2";
+    tableHead.style.display="block";
 
+    tbl.appendChild(tableHead);
     for(var i = 0; i < chosenLetters.length; i++) {
-        var tr = tbl.insertRow();
+        //var tr = tbl.insertRow();
+        var tr = tableBody.insertRow();
         //letter names
         var td2 = tr.insertCell();
         td2.style.border = "1px solid black";
         td2.appendChild(document.createTextNode(chosenLetters[i]));
+        td2.style.width= "120px";
         tr.appendChild(td2);
 
         for(var j = 0; j < chosenManuscripts.length; j++){
@@ -346,7 +357,7 @@ function generateTable(sizeChoice, imageChoice){
                     var sizeChoice = getImageSize();
 
                     var width = getImageScaledSize(letterName, sizeChoice);
-
+                    
                     this.width = width;
                 };
 
@@ -387,14 +398,26 @@ function generateTable(sizeChoice, imageChoice){
 
 
                 img.setAttribute('src', imageSrc);
+                //img.style.width= "100%";
+                
 
                 td.appendChild(img);
                 td.style.border = "1px solid black";
                 td.style.textAlign = "center";
+                // fixed head (img does not cover head)
+                td.style.zIndex="1";
+                td.style.width= "120px";
             }
         }
+        //tableBody.appendChild(tr);
     }
-
+    // fixed head and inner scroll
+    tableBody.style.display="block";
+    tableBody.style.overflow="auto";
+    tableBody.style.height ="500px";
+   
+    //alert(tableBody.style.overflow);
+    tbl.appendChild(tableBody);
     tableDiv.appendChild(tbl);
     body.appendChild(tableDiv);
 
