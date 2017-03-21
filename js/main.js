@@ -178,6 +178,25 @@ function getImageSize() {
     return sizeChoice;
 }
 
+function getImagePixelSize(sizeChoice) {
+    //get the size in pixel : 120,160,200
+    var chosenWidth=0;
+    // set up size for sizechoice
+    if(sizeChoice=="small") {
+        //width = 40*scaleFactor;
+        chosenWidth = 120;
+    }
+    else if (sizeChoice =="medium") {
+        chosenWidth = 160;
+    }
+    else {
+        chosenWidth = 200;
+        //width = 55*scaleFactor;
+    }
+
+    return chosenWidth;
+}
+
 function getImageScaledSize(letter, sizeChoice) {
 
 //    var vars = [{key:"alpha", value:"12"}];
@@ -241,8 +260,8 @@ function getImageScaledSize(letter, sizeChoice) {
     }
 
     if(sizeChoice=="small") {
-        width = 40*scaleFactor;
-        //width = 55*scaleFactor;
+        //width = 40*scaleFactor;
+        width = 55*scaleFactor;
     }
     else if (sizeChoice =="medium") {
         width = 55*scaleFactor;
@@ -257,13 +276,14 @@ function getImageScaledSize(letter, sizeChoice) {
 
 //generates table of images based on chosen manuscripts
 function generateTable(sizeChoice, imageChoice){
-
     //pulls selected manuscripts and creates array chosenManuscripts
     var chosenManuscripts = getChosenValuesFromList("manuscripts");
 
     //pulls letters and creates array chosenLetters
     var chosenLetters = getChosenValuesFromList("letters");
 
+    var chosenWidth=getImagePixelSize(sizeChoice);
+    
     //create the table with manuscrips, letters, and images
     document.getElementById('letterTable').innerHTML = '  ';
     chosenManuscripts.splice(0, 0, ""); //formatting
@@ -306,7 +326,8 @@ function generateTable(sizeChoice, imageChoice){
         spanInfo.appendChild(tableshelf);
 
         // margin and even width of column
-        spanInfo.style.width = "119px";
+        //spanInfo.style.width = "119px";
+        spanInfo.style.width = (chosenWidth-1)+"px";
 
         th.appendChild(spanInfo);
         //th.appendChild(document.createElement('br'));
@@ -337,8 +358,10 @@ function generateTable(sizeChoice, imageChoice){
         var td2 = tr.insertCell();
         td2.style.border = "1px solid black";
         td2.appendChild(document.createTextNode(chosenLetters[i]));
-        td2.style.width= "120px";
-        td2.style.height= "100px";
+        //td2.style.width= "120px";
+        //td2.style.height= "100px";
+        td2.style.width=chosenWidth+"px";
+        td2.style.height= (chosenWidth-20)+"px";
         td2.style.textAlign = "center";
         tr.appendChild(td2);
 
@@ -362,12 +385,15 @@ function generateTable(sizeChoice, imageChoice){
                     var letterName = this.getAttribute("alt");
                     var sizeChoice = getImageSize();
 
-                    //var width = getImageScaledSize(letterName, sizeChoice);
+                    var width =getImagePixelSize(sizeChoice);
                     
                     //this.width = width;
                     // img has same size
-                    this.width = '80';
-                    this.height='80';
+                    //this.width = '80';
+                    //this.height='80';
+                    alert(width);
+                    this.width = (width-40);
+                    this.height=(width-40);
                 };
 
                 img.onerror = function() {
@@ -383,11 +409,11 @@ function generateTable(sizeChoice, imageChoice){
 
                     //width = getImageScaledSize(letterName, sizeChoice);
 
-                    obj.style.top = "-20px";
-                    obj.style.left = "-20px";
+                    obj.style.top = (-(chosenWidth-40)/4)+"px";
+                    obj.style.left = (-(chosenWidth-40)/4)+"px";
                     obj.style.position = "absolute";
-                    obj.style.width = (160)+"px"; //2*width;
-                    obj.style.height = (160)+"px";
+                    obj.style.width = (2*(chosenWidth-40))+"px"; //2*width;
+                    obj.style.height = (2*(chosenWidth-40))+"px";
                     obj.style.zIndex = 10;
                     obj.style.border = "5px silver outset";
                     // make sure be above other img
@@ -403,8 +429,10 @@ function generateTable(sizeChoice, imageChoice){
                     //width = getImageScaledSize(letterName, sizeChoice);
 
                     //obj.style.width = width+"px"; //width/2;
-                    obj.style.width = "80px";
-                    obj.style.height = "80px";
+                    //obj.style.width = "80px";
+                    //obj.style.height = "80px";
+                    obj.style.width = (chosenWidth-40)+"px";
+                    obj.style.height = (chosenWidth-40)+"px";
                     obj.style.zIndex = 1;
                     obj.parentNode.style.zIndex = 1;
                     obj.style.position = "static";
@@ -421,7 +449,7 @@ function generateTable(sizeChoice, imageChoice){
                 td.style.textAlign = "center";
                 // fixed head (img does not cover head)
                 td.style.zIndex="1";
-                td.style.width= "120px";
+                td.style.width= (chosenWidth)+"px";
             }
         }
         //tableBody.appendChild(tr);
@@ -493,13 +521,19 @@ function generateFlow(sizeChoice, imageChoice) {
                 var scaleFactor = 2;
 
                 if(sizeChoice=="small") {
-                    this.width = 25*scaleFactor;
+                    //this.width = 25*scaleFactor;
+                    this.width=80;
+                    this.height=80;
                 }
                 else if (sizeChoice =="medium") {
-                    this.width = 40*scaleFactor;
+                    //this.width = 40*scaleFactor;
+                    this.width=120;
+                    this.height=120;
                 }
                 else {
-                    this.width = 50*scaleFactor;
+                    //this.width = 50*scaleFactor;
+                    this.width=120;
+                    this.height=120;
                 }
             };
 
@@ -520,7 +554,7 @@ function generateFlow(sizeChoice, imageChoice) {
             div.appendChild(img);
 
             div.style.textAlign = "center";
-            div.style.width = "180px";
+            div.style.width = "200px";
 
             tableDiv.appendChild(div);
             body.appendChild(tableDiv);
