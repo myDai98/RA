@@ -128,7 +128,9 @@ function processData() {
         }
     }
 
-    var imageStyle = getImageChoice();
+    //var imageStyle = getImageChoice();
+    // just binary
+    var imageStyle = "binaryrep";
     var sizeChoice = getImageSize();
 
     var chosenManuscripts = getChosenValuesFromList("manuscripts");
@@ -158,7 +160,7 @@ function getImageChoice() {
             imageChoice = images[i].value;
         }
     }
-
+    
     return imageChoice;
 }
 

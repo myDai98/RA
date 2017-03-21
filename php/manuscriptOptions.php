@@ -59,20 +59,21 @@ require "buildQueryString.php"; //initial SQL query
             <br>
         </div>
         <div class="col-sm-4" name = "imageOptions">
-            <h4>Image type</h4>
+
+            <!-- <h4>Image type</h4>
             <h5>
                 <input type="radio" name="images" value="rawrep" >
                 Color
                 <input type="radio" name="images" value="binaryrep" checked="checked" >
                 Black and White
-<!--
+
                 <br>
                 <input type="radio" name="images" value="smooth" >
                 Smooth B/W
--->
+
             </h5>
             <br>
-            <h4>Image size</h4>
+ -->            <h4>Image size</h4>
             <h5>
                 <input type="radio" name="size" value="small" checked="checked" >
                 Small
@@ -89,6 +90,7 @@ require "buildQueryString.php"; //initial SQL query
                 <input type="radio" name="layout" value="flow" >
                 Flow
             </h5>
+            <br>
             <br>
             <br><br>
         </div>
