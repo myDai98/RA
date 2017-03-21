@@ -233,19 +233,21 @@ function getImageScaledSize(letter, sizeChoice) {
     //set height to x, multiply by scaleFactor
     var scaleFactor = letterScales[letter];
     var width;
-
+    //var scaleFactor = 10;
     if (scaleFactor == null) {
         scaleFactor = 1;
     }
 
     if(sizeChoice=="small") {
         width = 40*scaleFactor;
+        //width = 55*scaleFactor;
     }
     else if (sizeChoice =="medium") {
         width = 55*scaleFactor;
     }
     else {
         width = 70*scaleFactor;
+        //width = 55*scaleFactor;
     }
 
     return width;
@@ -358,9 +360,12 @@ function generateTable(sizeChoice, imageChoice){
                     var letterName = this.getAttribute("alt");
                     var sizeChoice = getImageSize();
 
-                    var width = getImageScaledSize(letterName, sizeChoice);
+                    //var width = getImageScaledSize(letterName, sizeChoice);
                     
-                    this.width = width;
+                    //this.width = width;
+                    // img has same size
+                    this.width = '80';
+                    this.height='80';
                 };
 
                 img.onerror = function() {
@@ -374,14 +379,17 @@ function generateTable(sizeChoice, imageChoice){
                     var letterName = this.getAttribute("alt");
                     var sizeChoice = getImageSize();
 
-                    width = getImageScaledSize(letterName, sizeChoice);
+                    //width = getImageScaledSize(letterName, sizeChoice);
 
-                    obj.style.top = "0px";
-                    obj.style.left = "0px";
+                    obj.style.top = "-20px";
+                    obj.style.left = "-20px";
                     obj.style.position = "absolute";
-                    obj.style.width = (2*width)+"px"; //2*width;
-                    obj.style.zIndex = 1;
+                    obj.style.width = (160)+"px"; //2*width;
+                    obj.style.height = (160)+"px";
+                    obj.style.zIndex = 10;
                     obj.style.border = "5px silver outset";
+                    // make sure be above other img
+                    obj.parentNode.style.zIndex = 10;
                 };
 
                 img.onmouseup = function() {
@@ -390,17 +398,20 @@ function generateTable(sizeChoice, imageChoice){
                     var letterName = this.getAttribute("alt");
                     var sizeChoice = getImageSize();
 
-                    width = getImageScaledSize(letterName, sizeChoice);
+                    //width = getImageScaledSize(letterName, sizeChoice);
 
-                    obj.style.width = width+"px"; //width/2;
-                    obj.style.zIndex = 0;
+                    //obj.style.width = width+"px"; //width/2;
+                    obj.style.width = "80px";
+                    obj.style.height = "80px";
+                    obj.style.zIndex = 1;
+                    obj.parentNode.style.zIndex = 1;
                     obj.style.position = "static";
                     obj.style.border = "0px";
                 };
 
 
                 img.setAttribute('src', imageSrc);
-                //img.style.width= "100%";
+                //img.style.width= "1";
                 
 
                 td.appendChild(img);
