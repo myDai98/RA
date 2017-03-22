@@ -3,6 +3,39 @@ var DEBUG = false;
 var firstTriangle = "open";
 var secondTriangle = "open";
 
+// for searching alternative for different forms of same letters
+var twoAlt ={
+    "Alaph (Round)":"Alaph (Angular)",
+    "Alaph (Angular)":"Alaph (Round)",
+    "Dalath (Round)": "Dalath (Angular)",
+    "Dalath (Angular)":"Dalath (Round)",
+    "He (Angular)": "He (Round)",
+    "He (Round)":"He (Angular)",
+    "Yudh (Connected)":"Yudh (Stand-alone)",
+    "Yudh (Stand-alone)":"Yudh (Connected)",
+    "Kaph":"Kaph (Final)",
+    "Kaph (Final)":"Kaph",
+    "Mim": "Mim (Final)",
+    "Mim (Final)":"Mim",
+    "Rish (Angular)":"Rish (Round)",
+    "Rish (Round)":"Rish (Angular)"
+
+};
+
+var thrAlt={
+    "Lamadh":["Lamadh (Final, open)","Lamadh (Final, closed)"],
+    "Lamadh (Final, open)":["Lamadh","Lamadh (Final, closed)"],
+    "Lamadh (Final, closed)":["Lamadh","Lamadh (Final, open)"],
+    "Ayin":["Ayin (Final, closed)","Ayin (Final, open)"],
+    "Ayin (Final, closed)":["Ayin","Ayin (Final, open)"],
+    "Ayin (Final, open)":["Ayin (Final, closed)","Ayin"],
+    "Nun":["Nun (Final, connected)","Nun (Final, unconnected)"],
+    "Nun (Final, connected)":["Nun","Nun (Final, unconnected)"],
+    "Nun (Final, unconnected)":["Nun (Final, connected)","Nun"],
+    "Taw (L-shaped)":["Taw (Looped)","Taw (Triangular)"],
+    "Taw (Looped)":["Taw (L-shaped)","Taw (Triangular)"],
+    "Taw (Triangular)":["Taw (Looped)","Taw (L-shaped)"]
+}
 //General function to define AJAX global variable
 function setUpAjax(divID){
     //Browser Support Code (Necessary)
@@ -274,6 +307,18 @@ function getImageScaledSize(letter, sizeChoice) {
     return width;
 }
 
+// test if src excists
+function imageExists(image_url){
+
+    var http = new XMLHttpRequest();
+
+    http.open('HEAD', image_url, false);
+    http.send();
+
+    return http.status != 404;
+
+}
+
 //generates table of images based on chosen manuscripts
 function generateTable(sizeChoice, imageChoice){
     //pulls selected manuscripts and creates array chosenManuscripts
@@ -379,6 +424,8 @@ function generateTable(sizeChoice, imageChoice){
                 td.style.position = "relative";
 
                 img.setAttribute("alt", chosenLetters[i]);
+                //set up for alternative
+                img.setAttribute("class", res[0]);
 
                 img.onload = function() {
 
@@ -391,14 +438,50 @@ function generateTable(sizeChoice, imageChoice){
                     // img has same size
                     //this.width = '80';
                     //this.height='80';
-                    alert(width);
+                    
                     this.width = (width-40);
                     this.height=(width-40);
                 };
 
                 img.onerror = function() {
                     this.onerror = null;
-                    this.src = "images/noImage.png";
+                    //this.src = "images/noImage.png";
+                    // handle different forms of letters
+                    var letterName = this.getAttribute("alt");
+                    var imgClass = this.getAttribute("class");
+                    if(letterName in twoAlt){
+                        /**try{
+                            var altSrc = "images/" + "binaryrep" + "/" + twoAlt[letterName] + "_" + imgClass + ".png";
+                            var altImg=new Image();
+                            altImg.src=altSrc;
+                            this.src="images/hasAlt.png";
+                        }
+                        catch(e){
+                            this.src = "images/noImage.png";
+                            
+                        }*/
+                        var altSrc = "images/" + "binaryrep" + "/" + twoAlt[letterName] + "_" + imgClass + ".png";
+                        if(imageExists(altSrc)){
+                            this.src="images/hasAlt.png";
+                        }
+                        else{
+                            this.src = "images/noImage.png";
+                        }
+                    }
+                    else if (letterName in thrAlt){
+                        var altSrc1 = "images/" + "binaryrep" + "/" + thrAlt[letterName][0] + "_" + imgClass + ".png";
+                        var altSrc2 = "images/" + "binaryrep" + "/" + thrAlt[letterName][1] + "_" + imgClass + ".png";
+
+                        if(imageExists(altSrc1)||imageExists(altSrc2)){
+                            this.src="images/hasAlt.png";
+                        }
+                        else{
+                            this.src = "images/noImage.png";
+                        }
+                    }
+                    else{
+                        this.src = "images/noImage.png";
+                    }
                 };
 
                 img.onmousedown = function() {
@@ -514,7 +597,9 @@ function generateFlow(sizeChoice, imageChoice) {
             var imageSrc = "images/" + imageChoice + "/" + chosenLetters[j] + "_" + res[0] + ".png";
 
             var img = document.createElement("img");
-
+            img.setAttribute("alt", chosenLetters[j]);
+            img.setAttribute('src', imageSrc);
+            img.setAttribute("class", res[0]);
             img.onload = function() {
                 var width = this.clientWidth;
                 //set height to x, multiply by scaleFactor
@@ -537,11 +622,39 @@ function generateFlow(sizeChoice, imageChoice) {
                 }
             };
 
-            img.setAttribute('src', imageSrc);
+            
 
             img.onerror = function() {
-                this.onerror = null;
-                this.src = "images/noImage.png";
+                //this.onerror = null;
+                //this.src = "images/noImage.png";
+                //handle alternative form
+                var letterName = this.getAttribute("alt");
+                var imgClass = this.getAttribute("class");
+                
+                    if(letterName in twoAlt){
+                       
+                        var altSrc = "images/" + "binaryrep" + "/" + twoAlt[letterName] + "_" + imgClass + ".png";
+                        if(imageExists(altSrc)){
+                            this.src="images/hasAlt.png";
+                        }
+                        else{
+                            this.src = "images/noImage.png";
+                        }
+                    }
+                    else if (letterName in thrAlt){
+                        var altSrc1 = "images/" + "binaryrep" + "/" + thrAlt[letterName][0] + "_" + imgClass + ".png";
+                        var altSrc2 = "images/" + "binaryrep" + "/" + thrAlt[letterName][1] + "_" + imgClass + ".png";
+
+                        if(imageExists(altSrc1)||imageExists(altSrc2)){
+                            this.src="images/hasAlt.png";
+                        }
+                        else{
+                            this.src = "images/noImage.png";
+                        }
+                    }
+                    else{
+                        this.src = "images/noImage.png";
+                    }
             };
 
 
