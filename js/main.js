@@ -125,8 +125,14 @@ function searchByCriteria(divID) {
     }
 
     //find whether manuscripts without dates should be included
-    var dates = document.getElementById("dates");
-    var onlyDated = dates.checked;
+    var dates = document.getElementsByName("dates");
+    //var onlyDated = dates.checked;
+    // change to radio 
+    for(var i = 0; i < dates.length; i++) {
+        if(dates[i].checked == true) {
+            var dateType = dates[i].value;
+        }
+    }
 
     //manufactures a range
     if(firstDate == "") {
@@ -137,8 +143,8 @@ function searchByCriteria(divID) {
     }
 
     //creates query string to send
-    var queryString = "?firstDate=" + firstDate+  "&secondDate=" + secondDate + "&onlyDated=" + onlyDated + "&sortChoice=" + sortChoice;
-
+    //var queryString = "?firstDate=" + firstDate+  "&secondDate=" + secondDate + "&onlyDated=" + onlyDated + "&sortChoice=" + sortChoice;
+    var queryString = "?firstDate=" + firstDate+  "&secondDate=" + secondDate + "&dateType=" + dateType + "&sortChoice=" + sortChoice;
     //uses AJAX to call manuscriptOptions.php, sending query string
     AJAX.open("GET", "php/manuscriptOptions.php" + queryString, true);
     AJAX.send(null);
@@ -391,7 +397,9 @@ function generateTable(sizeChoice, imageChoice){
         tableHead.appendChild(th);
     }
     
-    tableHead.style.background = "#B8C1C8";
+    //tableHead.style.background = "#B8C1C8";
+    tableHead.style.background = "#F5DEB3";
+
     tableHead.style.zIndex="2";
     tableHead.style.display="block";
 
@@ -630,7 +638,7 @@ function generateFlow(sizeChoice, imageChoice) {
                 //handle alternative form
                 var letterName = this.getAttribute("alt");
                 var imgClass = this.getAttribute("class");
-                
+
                     if(letterName in twoAlt){
                        
                         var altSrc = "images/" + "binaryrep" + "/" + twoAlt[letterName] + "_" + imgClass + ".png";

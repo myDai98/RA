@@ -53,8 +53,14 @@
                             Latest Date:
                             <input type="text" id="latest" class="shortText" placeholder="No Limit" onblur="checkInput('latest')">
                             <br><br>
-                            <input type="checkbox" id="dates" value="dated" checked="checked">
-                            Only display dated manuscripts
+                            <!-- <input type="checkbox" id="dates" value="dated" checked="checked">
+                            Only display dated manuscripts -->
+                            <input type="radio" name="dates" value="dated" checked="checked" >
+                            Only Display Securely Dated Manuscripts&nbsp
+                            <input type="radio" name="dates" value="nondated" >
+                            Only Display Manuscripts Without a Secure Date&nbsp
+                            <input type="radio" name="dates" value="both" >
+                            Display All Manuscripts
                             <br>
                         </h5>
                         <br>
