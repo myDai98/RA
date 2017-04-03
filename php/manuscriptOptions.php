@@ -95,5 +95,10 @@ require "buildQueryString.php"; //initial SQL query
             <br><br>
         </div>
         <input type="button" onclick="processData()" value="Submit" data-toggle="collapse" data-target="#collapseManuscriptChoices" onClick=toggleBoth()> <br>
+        <br>
+        <!-- Add Guidiance to choose  -->
+        <p>  &nbsp&nbsp&nbsp&nbspClick for selection of single item</p>
+        <p>  &nbsp&nbsp&nbsp&nbspClick while holding down shift key for selection of multiple, contiguous items</p>
+        <p>  &nbsp&nbsp&nbsp&nbspClick while holding down command key for selection of multiple, non-continguous items</p>
     </div>
 </div>
