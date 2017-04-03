@@ -217,20 +217,26 @@ function getImageSize() {
     return sizeChoice;
 }
 
-function getImagePixelSize(sizeChoice) {
+// scale zaynes, all the versions of yod, and the non-final nuns to be about 30% smaller
+function getImagePixelSize(sizeChoice,letter) {
     //get the size in pixel : 120,160,200
     // make all of them smaller: 100 120 160
     var chosenWidth=0;
+    var scalegroup=["Zain","Nun","Yudh (Connected)","Yudh (Stand-alone)"];
+    var scale=1;
+    if(scalegroup.indexOf(letter)!=-1){
+        scale=0.75;
+    }
     // set up size for sizechoice
     if(sizeChoice=="small") {
         //width = 40*scaleFactor;
-        chosenWidth = 100;
+        chosenWidth = 100*scale;
     }
     else if (sizeChoice =="medium") {
-        chosenWidth = 120;
+        chosenWidth = 120*scale;
     }
     else {
-        chosenWidth = 160;
+        chosenWidth = 160*scale;
         //width = 55*scaleFactor;
     }
 
@@ -415,7 +421,7 @@ function generateTable(sizeChoice, imageChoice){
         //td2.style.width= "120px";
         //td2.style.height= "100px";
         td2.style.width=chosenWidth+"px";
-        td2.style.height= (chosenWidth)+"px";
+        td2.style.height= chosenWidth+"px";
         td2.style.textAlign = "center";
         tr.appendChild(td2);
 
@@ -441,7 +447,7 @@ function generateTable(sizeChoice, imageChoice){
                     var letterName = this.getAttribute("alt");
                     var sizeChoice = getImageSize();
 
-                    var width =getImagePixelSize(sizeChoice);
+                    var width =getImagePixelSize(sizeChoice,letterName);
                     
                     //this.width = width;
                     // img has same size
@@ -506,6 +512,7 @@ function generateTable(sizeChoice, imageChoice){
                     obj.style.position = "absolute";
                     obj.style.width = (2*(chosenWidth-40))+"px"; //2*width;
                     obj.style.height = (2*(chosenWidth-40))+"px";
+                    //alert(obj.style.height);
                     obj.style.zIndex = 10;
                     obj.style.border = "5px silver outset";
                     // make sure be above other img
@@ -523,8 +530,11 @@ function generateTable(sizeChoice, imageChoice){
                     //obj.style.width = width+"px"; //width/2;
                     //obj.style.width = "80px";
                     //obj.style.height = "80px";
-                    obj.style.width = (chosenWidth-40)+"px";
-                    obj.style.height = (chosenWidth-40)+"px";
+                    var wid=getImagePixelSize(sizeChoice,letterName);
+                    
+                    obj.style.width = (wid-40)+"px";
+                    obj.style.height = (wid-40)+"px";
+                    alert(obj.style.height);
                     obj.style.zIndex = 1;
                     obj.parentNode.style.zIndex = 1;
                     obj.style.position = "static";
@@ -610,25 +620,16 @@ function generateFlow(sizeChoice, imageChoice) {
             img.setAttribute('src', imageSrc);
             img.setAttribute("class", res[0]);
             img.onload = function() {
-                var width = this.clientWidth;
+                //var width = this.clientWidth;
                 //set height to x, multiply by scaleFactor
+                var letterName = this.getAttribute("alt");
+                //var sizeChoice = getImageSize();
+                var width =getImagePixelSize(sizeChoice,letterName);
                 var scaleFactor = 2;
+                this.width=width-40;
+                this.height=width-40;
 
-                if(sizeChoice=="small") {
-                    //this.width = 25*scaleFactor;
-                    this.width=80;
-                    this.height=80;
-                }
-                else if (sizeChoice =="medium") {
-                    //this.width = 40*scaleFactor;
-                    this.width=100;
-                    this.height=100;
-                }
-                else {
-                    //this.width = 50*scaleFactor;
-                    this.width=120;
-                    this.height=120;
-                }
+
             };
 
             
