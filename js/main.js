@@ -219,17 +219,18 @@ function getImageSize() {
 
 function getImagePixelSize(sizeChoice) {
     //get the size in pixel : 120,160,200
+    // make all of them smaller: 100 120 160
     var chosenWidth=0;
     // set up size for sizechoice
     if(sizeChoice=="small") {
         //width = 40*scaleFactor;
-        chosenWidth = 120;
+        chosenWidth = 100;
     }
     else if (sizeChoice =="medium") {
-        chosenWidth = 160;
+        chosenWidth = 120;
     }
     else {
-        chosenWidth = 200;
+        chosenWidth = 160;
         //width = 55*scaleFactor;
     }
 
@@ -414,7 +415,7 @@ function generateTable(sizeChoice, imageChoice){
         //td2.style.width= "120px";
         //td2.style.height= "100px";
         td2.style.width=chosenWidth+"px";
-        td2.style.height= (chosenWidth-20)+"px";
+        td2.style.height= (chosenWidth)+"px";
         td2.style.textAlign = "center";
         tr.appendChild(td2);
 
@@ -620,8 +621,8 @@ function generateFlow(sizeChoice, imageChoice) {
                 }
                 else if (sizeChoice =="medium") {
                     //this.width = 40*scaleFactor;
-                    this.width=120;
-                    this.height=120;
+                    this.width=100;
+                    this.height=100;
                 }
                 else {
                     //this.width = 50*scaleFactor;
