@@ -534,7 +534,7 @@ function generateTable(sizeChoice, imageChoice){
                     
                     obj.style.width = (wid-40)+"px";
                     obj.style.height = (wid-40)+"px";
-                    alert(obj.style.height);
+                    
                     obj.style.zIndex = 1;
                     obj.parentNode.style.zIndex = 1;
                     obj.style.position = "static";
@@ -583,25 +583,25 @@ function generateFlow(sizeChoice, imageChoice) {
 
     var body = document.getElementById('letterTable');
     var tableDiv = document.createElement('div');
-
-    for (var i = 0; i < chosenManuscripts.length; i++) {
-        for(var j = 0; j < chosenLetters.length; j++ ){
+chosenLetters
+    for (var i = 0; i < chosenLetters.length; i++) {
+        for(var j = 0; j < chosenManuscripts.length; j++ ){
             var div = document.createElement("div");
             div.style.display = "inline-block";
             div.style.borderRight = "solid";
             div.style.padding = "10px";
 
 
-            var title = chosenManuscripts[i] + " ";
+            var title = chosenManuscripts[j] + " ";
             var name = title.slice(0, title.indexOf(":"));
             
             var date = title.slice(title.indexOf(":")+2);
 
-            var manuscriptName = document.createTextNode(name);
+            var letterName = document.createTextNode(chosenLetters[i]);
             var lineBreak = document.createElement("br");
             var manuscriptDate = document.createTextNode(date);
             var secondLineBreak = document.createElement("br");
-            var letterName = document.createTextNode(chosenLetters[j]);
+            var manuscriptName = document.createTextNode(name);
             var thirdLineBreak = document.createElement("br");
 
             // the dates should be in bold
@@ -609,14 +609,14 @@ function generateFlow(sizeChoice, imageChoice) {
             spanDate.style.fontWeight = "bold";
             spanDate.appendChild(manuscriptDate);
 
-            var str = chosenManuscripts[i];
+            var str = chosenManuscripts[j];
             var res = str.split(":");
 
             //creates fileName to pull image
-            var imageSrc = "images/" + imageChoice + "/" + chosenLetters[j] + "_" + res[0] + ".png";
+            var imageSrc = "images/" + imageChoice + "/" + chosenLetters[i] + "_" + res[0] + ".png";
 
             var img = document.createElement("img");
-            img.setAttribute("alt", chosenLetters[j]);
+            img.setAttribute("alt", chosenLetters[i]);
             img.setAttribute('src', imageSrc);
             img.setAttribute("class", res[0]);
             img.onload = function() {
@@ -667,12 +667,11 @@ function generateFlow(sizeChoice, imageChoice) {
                     }
             };
 
-
-            div.appendChild(manuscriptName);
+            div.appendChild(letterName);           
             div.appendChild(lineBreak);
             div.appendChild(spanDate);
             div.appendChild(secondLineBreak);
-            div.appendChild(letterName);
+            div.appendChild(manuscriptName);
             div.appendChild(thirdLineBreak);
             div.appendChild(img);
 
