@@ -5,6 +5,10 @@
 
 require "config.php"; //conect to database
 require "buildQueryString.php"; //initial SQL query
+//require "buildQueryPage.php"; 
+
+// disconnect and reopen a query
+require "buildQueryPage.php";
 ?>
 
 <br>
@@ -30,9 +34,29 @@ require "buildQueryString.php"; //initial SQL query
 //                            ChromePhp::log($average);
                             echo "<option value='{$name}'>{$name}</option>";
                         }
+                        //var aaa=count($page);
+                        //echo "<option value='{ffef}'>{aaa}</option>";
                     ?>
 
                 </select>
+
+                <select id="page" class="form-control"  multiple size="10">
+                    <?php
+                        //require "filterManuscripts.php";//filters and sorts
+
+                        //displays results
+                        //should be sorted before we get here
+                        foreach($page as $url) {
+//                            ChromePhp::log($average);
+                            echo "<option value='{$url}'>{$url}</option>";
+                        }
+                        //var aaa=count($page);
+                        //echo "<option value='{ffef}'>{aaa}</option>";
+                    ?>
+
+                </select>
+
+
             </form>
             <br/>
             <input type="button" name="Button" value="All" onclick="selectAll('manuscripts')" >

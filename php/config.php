@@ -7,4 +7,5 @@
 
     // Connect to db
     $db = new MySQLi($host, $username, $password, $db_name, $port);
+    //mysqli_close ( $db );
 ?>

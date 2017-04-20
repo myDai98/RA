@@ -3,16 +3,22 @@
     include 'ChromePhp.php';
 
     //generates an associative array containing manuscript and year
-    while($throw_query = $result->fetch_assoc()) {
+    while($throw = $result->fetch_assoc()) {
         //creates variables to add to associative array
-        $manuscript = $throw_query['Manuscript_no'];
-        $date = $throw_query['Date'];
+        $manus = $throw['Manuscript_no'];
+        $date = $throw['Date'];
 
         //adds elements to array
         //elements can be accessed like: foreach($manu as $m=>$m_date)
-        $manu[$manuscript] = $date;
+        $manu[$manus] = $date;
     }
 
+    // turn page url into an array
+    while($row = $pageresult->fetch_assoc()){
+        array_push($page, $row['Image_Name']);
+    }
+    //echo count($page);
+    //print count(url);
     //turns numbers into one int value (averages ranges)
     foreach($manu as $m=>$m_date) {
 

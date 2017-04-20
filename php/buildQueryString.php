@@ -10,6 +10,9 @@
     //build query
     $query = 'SELECT * FROM manuscripttable';
 
+    // build new query to get all urls of page imgs
+    //$pagequery='SELECT Image_Name FROM pagetable';
+
     //selects only dated manuscripts
     // if ($onlyDated == "true") {
     //     //$query .= " WHERE Date NOT IN ('')";
@@ -25,7 +28,9 @@
 
     //runs query
     $result = $db->query($query);
+    //$pageurl = $db->query($pagequery);
     $manu = array();
+    //$page = array();
 
 
 ?>
