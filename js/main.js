@@ -3,6 +3,8 @@ var DEBUG = false;
 var firstTriangle = "open";
 var secondTriangle = "open";
 
+var pageList=[];
+var manuList=[];
 // for searching alternative for different forms of same letters
 var twoAlt ={
     "Alaph (Round)":"Alaph (Angular)",
@@ -174,6 +176,15 @@ function processData() {
 
     var chosenManuscripts = getChosenValuesFromList("manuscripts");
     var chosenLetters = getChosenValuesFromList("letters");
+
+    //get page and manulist
+    pageList=getOptionFromList("page");
+    manuList=getOptionFromList("manu");
+
+    for(i=0;i<pageList.length;i++){
+        sep=pageList[i].split("/");
+        pageList[i]=sep[sep.length-1];
+    }
 
     if(chosenLetters.length > 0 && chosenManuscripts.length > 0) {
         if(layoutType == "table" ) {
@@ -460,43 +471,56 @@ function generateTable(sizeChoice, imageChoice){
 
                 img.onerror = function() {
                     this.onerror = null;
-                    //this.src = "images/noImage.png";
+                    this.src = "images/noImage.png";
                     // handle different forms of letters
                     var letterName = this.getAttribute("alt");
                     var imgClass = this.getAttribute("class");
-                    if(letterName in twoAlt){
-                        /**try{
-                            var altSrc = "images/" + "binaryrep" + "/" + twoAlt[letterName] + "_" + imgClass + ".png";
-                            var altImg=new Image();
-                            altImg.src=altSrc;
-                            this.src="images/hasAlt.png";
-                        }
-                        catch(e){
-                            this.src = "images/noImage.png";
-                            
-                        }*/
-                        var altSrc = "images/" + "binaryrep" + "/" + twoAlt[letterName] + "_" + imgClass + ".png";
-                        if(imageExists(altSrc)){
-                            this.src="images/hasAlt.png";
-                        }
-                        else{
-                            this.src = "images/noImage.png";
-                        }
-                    }
-                    else if (letterName in thrAlt){
-                        var altSrc1 = "images/" + "binaryrep" + "/" + thrAlt[letterName][0] + "_" + imgClass + ".png";
-                        var altSrc2 = "images/" + "binaryrep" + "/" + thrAlt[letterName][1] + "_" + imgClass + ".png";
 
-                        if(imageExists(altSrc1)||imageExists(altSrc2)){
-                            this.src="images/hasAlt.png";
+                    // check the url with page number
+
+                    var pageext = getPage(imgClass);
+                    var nopage = 1<2;
+                    
+                    for(i=0;i<pageext.length;i++){
+                        
+                        var pageSrc="images/" + "binaryrep" + "/" + letterName + "_" + pageext[i];
+                        if(imageExists(pageSrc)){
+                            this.src=pageSrc;
+                            nopage=1>2;
+                            
+                            break;
+                        }
+                        
+                    }
+
+                    
+                    if(nopage){
+                        if(letterName in twoAlt){
+                        
+                            var altSrc = "images/" + "binaryrep" + "/" + twoAlt[letterName] + "_" + imgClass + ".png";
+                            if(imageExists(altSrc)){
+                                this.src="images/hasAlt.png";
+                            }
+                            else{
+                                this.src = "images/noImage.png";
+                            }
+                        }
+                        else if (letterName in thrAlt){
+                            var altSrc1 = "images/" + "binaryrep" + "/" + thrAlt[letterName][0] + "_" + imgClass + ".png";
+                            var altSrc2 = "images/" + "binaryrep" + "/" + thrAlt[letterName][1] + "_" + imgClass + ".png";
+
+                            if(imageExists(altSrc1)||imageExists(altSrc2)){
+                                this.src="images/hasAlt.png";
+                            }
+                            else{
+                                this.src = "images/noImage.png";
+                            }
                         }
                         else{
-                            this.src = "images/noImage.png";
+                        this.src = "images/noImage.png";
                         }
                     }
-                    else{
-                        this.src = "images/noImage.png";
-                    }
+
                 };
 
                 img.onmousedown = function() {
@@ -641,29 +665,47 @@ chosenLetters
                 var letterName = this.getAttribute("alt");
                 var imgClass = this.getAttribute("class");
 
-                    if(letterName in twoAlt){
-                       
-                        var altSrc = "images/" + "binaryrep" + "/" + twoAlt[letterName] + "_" + imgClass + ".png";
-                        if(imageExists(altSrc)){
-                            this.src="images/hasAlt.png";
+                    var pageext = getPage(imgClass);
+                    var nopage = 1<2;
+                    
+                    for(i=0;i<pageext.length;i++){
+                        
+                        var pageSrc="images/" + "binaryrep" + "/" + letterName + "_" + pageext[i];
+                        if(imageExists(pageSrc)){
+                            this.src=pageSrc;
+                            nopage=1>2;
+                            
+                            break;
                         }
-                        else{
-                            this.src = "images/noImage.png";
-                        }
+                        
                     }
-                    else if (letterName in thrAlt){
-                        var altSrc1 = "images/" + "binaryrep" + "/" + thrAlt[letterName][0] + "_" + imgClass + ".png";
-                        var altSrc2 = "images/" + "binaryrep" + "/" + thrAlt[letterName][1] + "_" + imgClass + ".png";
+                    
+                    
+                    if(nopage){
+                        if(letterName in twoAlt){
+                        
+                            var altSrc = "images/" + "binaryrep" + "/" + twoAlt[letterName] + "_" + imgClass + ".png";
+                            if(imageExists(altSrc)){
+                                this.src="images/hasAlt.png";
+                            }
+                            else{
+                                this.src = "images/noImage.png";
+                            }
+                        }
+                        else if (letterName in thrAlt){
+                            var altSrc1 = "images/" + "binaryrep" + "/" + thrAlt[letterName][0] + "_" + imgClass + ".png";
+                            var altSrc2 = "images/" + "binaryrep" + "/" + thrAlt[letterName][1] + "_" + imgClass + ".png";
 
-                        if(imageExists(altSrc1)||imageExists(altSrc2)){
-                            this.src="images/hasAlt.png";
+                            if(imageExists(altSrc1)||imageExists(altSrc2)){
+                                this.src="images/hasAlt.png";
+                            }
+                            else{
+                                this.src = "images/noImage.png";
+                            }
                         }
                         else{
-                            this.src = "images/noImage.png";
-                        }
-                    }
-                    else{
                         this.src = "images/noImage.png";
+                        }
                     }
             };
 
@@ -706,6 +748,20 @@ function getChosenValuesFromList(divID) {
     return chosenItems;
 }
 
+//returns an array of options
+function getOptionFromList(divID) {
+    var options = [];
+    var itemDropDown = document.getElementById(divID);
+    for (var i = 0; i < itemDropDown.options.length; i++) {
+        
+        var itemName = itemDropDown.options[i].value;
+        options.push(itemName);
+        
+    }
+
+    return options;
+}
+
 function checkInput(divID) {
     var input = document.getElementById(divID);
     //if matches not a number
@@ -715,4 +771,16 @@ function checkInput(divID) {
         input.placeholder = "Please enter a number";
         input.value = "";
     }
+}
+
+// take the name of manuscript and return a list of possible pages
+function getPage(manu) {
+    var pageext =[];
+
+    for(i=0;i<manuList.length;i++){
+        if(manuList[i]==manu){
+            pageext.push(pageList[i]);
+        }
+    }
+    return pageext;
 }

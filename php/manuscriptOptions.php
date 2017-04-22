@@ -40,7 +40,7 @@ require "buildQueryPage.php";
 
                 </select>
 
-                <select id="page" class="form-control"  multiple size="10">
+                <select id="page" class="form-control"  multiple size="10" style='display:none;'>
                     <?php
                         //require "filterManuscripts.php";//filters and sorts
 
@@ -49,6 +49,22 @@ require "buildQueryPage.php";
                         foreach($page as $url) {
 //                            ChromePhp::log($average);
                             echo "<option value='{$url}'>{$url}</option>";
+                        }
+                        //var aaa=count($page);
+                        //echo "<option value='{ffef}'>{aaa}</option>";
+                    ?>
+
+                </select>
+
+                <select id="manu" class="form-control"  multiple size="10" style='display:none;'>
+                    <?php
+                        //require "filterManuscripts.php";//filters and sorts
+
+                        //displays results
+                        //should be sorted before we get here
+                        foreach($manuname as $manu) {
+//                            ChromePhp::log($average);
+                            echo "<option value='{$manu}'>{$manu}</option>";
                         }
                         //var aaa=count($page);
                         //echo "<option value='{ffef}'>{aaa}</option>";

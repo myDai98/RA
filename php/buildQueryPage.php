@@ -10,6 +10,12 @@
     $pageresult = $db->query($pagequery);
 
     $page = array();
+    $manuname=array();
+    // turn page url into an array
+    while($row = $pageresult->fetch_assoc()){
+        array_push($page, $row['Image_Name']);
+        array_push($manuname, $row['Manuscript_No']);
+    }
 
 
 ?>

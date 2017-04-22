@@ -13,10 +13,7 @@
         $manu[$manus] = $date;
     }
 
-    // turn page url into an array
-    while($row = $pageresult->fetch_assoc()){
-        array_push($page, $row['Image_Name']);
-    }
+    
     //echo count($page);
     //print count(url);
     //turns numbers into one int value (averages ranges)
