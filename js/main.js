@@ -5,6 +5,7 @@ var secondTriangle = "open";
 
 var pageList=[];
 var manuList=[];
+var fullpageLis=[];
 // for searching alternative for different forms of same letters
 var twoAlt ={
     "Alaph (Round)":"Alaph (Angular)",
@@ -180,7 +181,7 @@ function processData() {
     //get page and manulist
     pageList=getOptionFromList("page");
     manuList=getOptionFromList("manu");
-
+    fullpageList=getOptionFromList("page");
     for(i=0;i<pageList.length;i++){
         sep=pageList[i].split("/");
         pageList[i]=sep[sep.length-1];
@@ -372,7 +373,9 @@ function generateTable(sizeChoice, imageChoice){
         
 
         var title = chosenManuscripts[k] + " ";
+
         var name = title.slice(0, title.indexOf(":"));
+        var pageurl = getexamplePage(name);
         var date = title.slice(title.indexOf(":")+2);
 
         //regex that searches for first number
@@ -387,10 +390,26 @@ function generateTable(sizeChoice, imageChoice){
         spanTableDate.appendChild(tableDate);
 
         var tablemanu = document.createTextNode(manuscript);
+        
         var tableshelf = document.createTextNode(shelfmark);
         var spanInfo = document.createElement('div');
         spanInfo.style.fontWeight = "normal";
-        spanInfo.appendChild(tablemanu);
+
+        if (pageurl!=null){
+            var link = document.createElement('a');
+            link.appendChild(tablemanu);
+            link.href = pageurl;
+            link.target = "_blank";
+            spanInfo.appendChild(link);
+        }
+        else{
+            spanInfo.appendChild(tablemanu);
+        }
+        
+
+        
+        //
+        
         spanInfo.appendChild(document.createElement('br'));
         spanInfo.appendChild(tableshelf);
 
@@ -618,7 +637,7 @@ chosenLetters
 
             var title = chosenManuscripts[j] + " ";
             var name = title.slice(0, title.indexOf(":"));
-            
+            var pageurl = getexamplePage(name)
             var date = title.slice(title.indexOf(":")+2);
 
             var letterName = document.createTextNode(chosenLetters[i]);
@@ -713,7 +732,19 @@ chosenLetters
             div.appendChild(lineBreak);
             div.appendChild(spanDate);
             div.appendChild(secondLineBreak);
-            div.appendChild(manuscriptName);
+
+            if (pageurl!=null){
+                var link = document.createElement('a');
+                link.appendChild(manuscriptName);
+                link.href = pageurl;
+                link.target = "_blank";
+                div.appendChild(link);
+            }
+            else{
+                div.appendChild(manuscriptName);
+            }
+
+            //div.appendChild(manuscriptName);
             div.appendChild(thirdLineBreak);
             div.appendChild(img);
 
@@ -783,4 +814,17 @@ function getPage(manu) {
         }
     }
     return pageext;
+}
+
+//take the name of manuscript and return an example of possible full page
+function getexamplePage(manu) {
+    var examplePage;
+
+    for(i=0;i<manuList.length;i++){
+        if(manuList[i]==manu){
+            examplePage=fullpageList[i];
+            break;
+        }
+    }
+    return examplePage;
 }
