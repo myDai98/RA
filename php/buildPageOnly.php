@@ -57,7 +57,7 @@
 
     // turn the data range into value
         foreach ($manu as $m => $m_date) {
-        $both = $m;
+        
 
         if (strpos($m_date, '-') != false) {
             $index = strrpos($manu[$m], "-");
@@ -68,11 +68,11 @@
             $average = ($firstValue + $secondValue) / 2;
 //            ChromePhp::log($average);
 
-            $finalManuscriptList[$both] = $average;
+            $manu[$m] = $average;
         }
 
         else {
-            $finalManuscriptList[$both] = $m_date;
+            $manu[$m] = $m_date;
         }
     }
 
