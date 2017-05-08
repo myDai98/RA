@@ -145,12 +145,30 @@ function searchByCriteria(divID) {
         secondDate = 1000000;
     }
 
-    //creates query string to send
-    //var queryString = "?firstDate=" + firstDate+  "&secondDate=" + secondDate + "&onlyDated=" + onlyDated + "&sortChoice=" + sortChoice;
-    var queryString = "?firstDate=" + firstDate+  "&secondDate=" + secondDate + "&dateType=" + dateType + "&sortChoice=" + sortChoice;
-    //uses AJAX to call manuscriptOptions.php, sending query string
-    AJAX.open("GET", "php/manuscriptOptions.php" + queryString, true);
-    AJAX.send(null);
+    //Get the type of data to display
+    var datatype = document.getElementsByName("datatype");
+    //var onlyDated = dates.checked;
+    // change to radio 
+    for(var i = 0; i < datatype.length; i++) {
+        if(datatype[i].checked == true) {
+            var dataType = datatype[i].value;
+        }
+    }
+    if(dataType=="letter"){
+        //creates query string to send
+        //var queryString = "?firstDate=" + firstDate+  "&secondDate=" + secondDate + "&onlyDated=" + onlyDated + "&sortChoice=" + sortChoice;
+        var queryString = "?firstDate=" + firstDate+  "&secondDate=" + secondDate + "&dateType=" + dateType + "&sortChoice=" + sortChoice;
+        //uses AJAX to call manuscriptOptions.php, sending query string
+        AJAX.open("GET", "php/manuscriptOptions.php" + queryString, true);
+        AJAX.send(null);
+    }
+    else{
+        var queryString = "?firstDate=" + firstDate+  "&secondDate=" + secondDate + "&dateType=" + dateType + "&sortChoice=" + sortChoice;
+        // just show sample page of manuscript
+        AJAX.open("GET", "php/pageOnly.php" + queryString, true);
+        AJAX.send(null);
+    }
+    
 }
 
 function processData() {
@@ -763,6 +781,77 @@ function selectAll(div) {
     for (var i = 0; i < m.options.length; i++) {
         m.options[i].selected = true;
     }
+}
+
+//function for two selection box works simultaneously
+function correlate(value)
+{
+    //alert(value);
+    //match the name
+    var m1 = document.getElementById("manuname");
+     for (var i = 0; i < m1.options.length; i++) {
+        if(m1.options[i].value ==value){
+
+            m1.selectedIndex = i;
+            break;
+        }
+        
+    }
+
+    //match the date
+    var m2 = document.getElementById("manudate");
+     for (var i = 0; i < m2.options.length; i++) {
+        if(m2.options[i].value ==value){
+
+            m2.selectedIndex = i;
+            break;
+        }
+        
+    }
+}
+
+function hide(){
+    var chunk = document.getElementById("canhide");
+    chunk.style.display = 'none';
+}
+
+function show(){
+    
+    var chunk = document.getElementById("canhide");
+    chunk.style.display = 'block';  
+}
+
+//show a sample page for chosen manuscript
+function showPage(){
+    var choices = getChosenValuesFromList("manuname");
+    var chosen = choices[0];
+    var chosenurl = transformPageUrl(chosen);
+    if(chosenurl=="none"){
+        alert("Sorry. No sample page in the database.");
+    }
+    else{
+        //alert(chosenurl);
+        var redirectWindow = window.open(chosenurl, '_blank');
+        redirectWindow.location;
+    }
+    
+    //alert(chosen);
+}
+
+//return the samplepage url from given manuscriptname
+function transformPageUrl(manuname){
+    var chosenurl="none";
+    var urls = document.getElementById("manuurl");
+     for (var i = 0; i < urls.options.length; i++) {
+        if(urls.options[i].value.split("+")[0] ==manuname){
+
+            chosenurl=urls.options[i].value.split("+")[1];
+            break;
+        }
+        
+    }
+
+    return chosenurl;
 }
 
 //returns an array of chosen values

@@ -46,6 +46,13 @@
                 <div id = "collapseSearch" class = "collapse in">
                     <form name="chronology" >
                         <br>
+                        <h4>Data Type</h4>
+                            <input type="radio" name="datatype" value="letter" checked="checked" onclick="show();">
+                            Letter & Page
+                            <input type="radio" name="datatype" value="page" onclick="hide();">
+                            Page Only
+                        <br><br>
+                        <div id="canhide">
                         <h4>Date Range</h4>
                         <h5>
                             Earliest Date:
@@ -72,6 +79,7 @@
                             <input type="radio" name="sort" value="alp" >
                             By Manuscript Shelfmark
                         </h5>
+                    </div>
                         <br>
 
                         <!-- button- onclick goes to the first javascript function-->
